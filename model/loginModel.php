@@ -3,17 +3,17 @@ require_once '../controller/conexao.php';
 
 class Cliente {
     
-    public function inserir($nomeCliente, $telefone, $cpf, $email) {
+    public function inserir($nomeCliente, $telefone, $email, $senha) {
         try {
-            $sql = "INSERT INTO cliente (nomeCliente, telefone, cpf, email) VALUES (:n, :t, :c, :e)";
+            $sql = "INSERT INTO cliente (nomeCliente, telefone, email, senha) VALUES (:n, :t, :c, :e)";
             
             $conexao = Conexao::conectar();
             $stmt = $conexao->prepare($sql);
             
             $stmt->bindParam(":n", $nomeCliente);
             $stmt->bindParam(":t", $telefone);
-            $stmt->bindParam(":c", $cpf);
-            $stmt->bindParam(":e", $email);
+            $stmt->bindParam(":c", $email);
+            $stmt->bindParam(":e", $senha);
             
             // Executa e retorna true em caso de sucesso
             return $stmt->execute();

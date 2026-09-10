@@ -1,68 +1,79 @@
-
 <!DOCTYPE html>
-<html lang="pt-BR">
-
+<html lang="pt-bt">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <title>Login</title>
-
-    <link rel="stylesheet" href="../css/estilo.css">
+    <title>Cadastrar veículo</title>
 </head>
-
 <body>
-
-    <main class="form-page">
+     <main class="form-page">
 
         <section class="form-card">
 
             <header class="form-header">
-                <h1>Fazer Login</h1>
-                <p>Entre na sua conta para continuar.</p>
+                <h1>Cadastrar Veículo</h1>
             </header>
 
-            <form action="../controller/loginController.php" method="POST">
+            <form action="../controller/carroController.php" method="POST">
+
+                 <label for="marca">Marca:</label>
+
+                <select id="marca" name="marca" class="form-control" required>
+
+                    <option value="">
+                        Selecione uma marca
+                    </option>
+
+                    <?php foreach ($marcas as $marca): ?>
+
+                        <option value="<?= $marca['idMarca'] ?>">
+                            <?= htmlspecialchars($marca['nomeMarca']) ?>
+                        </option>
+
+                    <?php endforeach; ?>
+
+                </select>
+
 
                 <div class="field">
-                    <label for="nome">Nome</label>
+                    <label for="modelo">modelo do veículo</label>
                     <input
                         type="text"
-                        id="nome"
-                        name="nome"
+                        id="modelo"
+                        name="modelo"
                         class="form-control"
                         required
                     >
                 </div>
 
                 <div class="field">
-                    <label for="tel">Telefone</label>
+                    <label for="senha">ano do veículo</label>
+                    <input
+                        type="year"
+                        id="ano"
+                        name="ano"
+                        class="form-control"
+                        required
+                    >
+                </div>
+
+                <div class="field">
+                    <label for="senha">RENAVAM</label>
                     <input
                         type="text"
-                        id="tel"
-                        name="tel"
+                        id="renavam"
+                        name="renavam"
                         class="form-control"
                         required
                     >
                 </div>
 
                 <div class="field">
-                    <label for="email">E-mail</label>
+                    <label for="senha">Valor da díaria</label>
                     <input
-                        type="email"
-                        id="email"
-                        name="email"
-                        class="form-control"
-                        required
-                    >
-                </div>
-
-                <div class="field">
-                    <label for="senha">Senha</label>
-                    <input
-                        type="password"
-                        id="senha"
-                        name="senha"
+                        type="decimal"
+                        id="valor"
+                        name="valor"
                         class="form-control"
                         required
                     >
@@ -71,7 +82,7 @@
                 <div class="form-submit">
                     <button
                         type="submit"
-                        name="btnLogar"
+                        name="btnCadastrar"
                         class="btn btn-primary btn-full"
                     >
                         Entrar
@@ -89,6 +100,5 @@
         </section>
 
     </main>
-
 </body>
 </html>

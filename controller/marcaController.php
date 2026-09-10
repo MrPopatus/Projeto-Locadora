@@ -1,19 +1,16 @@
 <?php
-    require_once '../model/loginModel.php';
-    if(isset($_POST['btnLogar'])){
-        $nomeCliente = $_POST['nome'];
-        $telefone = $_POST['tel'];
-        $email = $_POST['email'];
-        $senha = $_POST['senha'];
+    require_once '../model/marcaModel.php';
+    if(isset($_POST['btnCadastrar'])){
+        $nomeMarca = $_POST['marca'];
 
-        $clienteModel = new Cliente(); 
-        $sucesso = $clienteModel->inserir($nomeCliente, $telefone, $email, $senha);
+        $marcaModel = new Marca(); 
+        $sucesso = $marcaModel->inserir($nomeMarca);
 
         if ($sucesso) {
             echo "<script>
                     alert('Cadastro realizado com sucesso!');
-                    window.location.href = '../view/loginView.php';
-                    header('Location: ../view/loginView.php?status=sucesso');
+                    window.location.href = '../view/marcaView.php';
+                    header('Location: ../view/marcaView.php?status=sucesso');
                     exit();
                 </script>";
               

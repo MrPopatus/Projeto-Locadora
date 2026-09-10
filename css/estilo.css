@@ -1,24 +1,37 @@
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&display=swap');
+
 /* ==========================================================================
    1. VARIÁVEIS E CONFIGURAÇÕES GERAIS
    ========================================================================== */
 :root {
-  /* Cores Principais */
-  --primary: #0284c7;        /* Azul corporativo */
+  /* Cores Principais — mesma paleta em todas as páginas */
+  --primary: #0284c7;        /* Azul corporativo — navegação e ações de conta */
   --primary-hover: #0369a1;
-  --secondary: #0f172a;      /* Dark Slate (Cabeçalhos/Texto) */
-  --accent: #16a34a;         /* Verde (Ações de reserva/sucesso) */
+  --primary-soft: #e0f2fe;
+  --secondary: #0f172a;      /* Dark Slate — cabeçalhos, texto, painéis de destaque */
+  --secondary-soft: #1e293b;
+  --accent: #16a34a;         /* Verde — reservar / confirmar / concluir */
   --accent-hover: #15803d;
+  --accent-soft: #f0fdf4;
+  --danger: #dc2626;         /* Encerrar sessão / cancelar */
+  --danger-hover: #b91c1c;
 
   /* Neutros & Backgrounds */
   --bg-main: #f8fafc;
   --bg-card: #ffffff;
   --text-main: #334155;
   --text-muted: #64748b;
+  --text-on-dark: #e2e8f0;
   --border-color: #e2e8f0;
+
+  /* Tipografia */
+  --font-display: 'Space Grotesk', ui-sans-serif, system-ui, sans-serif;
+  --font-body: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
 
   /* Layout & Espaçamento */
   --container-max-width: 1200px;
   --radius-sm: 6px;
+  --radius-md: 10px;
   --radius-lg: 12px;
   --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.1);
   --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
@@ -35,15 +48,36 @@
 }
 
 body {
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+  font-family: var(--font-body);
   background-color: var(--bg-main);
   color: var(--text-main);
   line-height: 1.5;
   -webkit-font-smoothing: antialiased;
 }
 
+h1, h2, h3, .brand-logo {
+  font-family: var(--font-display);
+}
+
+a {
+  color: inherit;
+}
+
+:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+}
+
 /* ==========================================================================
-   2. ESTRUTURA DE LAYOUT
+   2. ESTRUTURA DE LAYOUT (Index)
    ========================================================================== */
 .container {
   width: 100%;
@@ -71,7 +105,7 @@ body {
 
 .brand-logo {
   font-size: 1.5rem;
-  font-weight: 800;
+  font-weight: 700;
   color: var(--secondary);
   text-decoration: none;
   display: flex;
@@ -81,6 +115,10 @@ body {
 
 .brand-logo span {
   color: var(--primary);
+}
+
+.brand-logo--on-dark {
+  color: #fff;
 }
 
 .main-nav {
@@ -101,7 +139,7 @@ body {
 }
 
 /* ==========================================================================
-   3. BARRA DE BUSCA / FILTRO DE RESERVA
+   3. BARRA DE BUSCA / FILTRO DE RESERVA (Index)
    ========================================================================== */
 .search-widget {
   background-color: var(--bg-card);
@@ -139,6 +177,7 @@ body {
   border: 1px solid var(--border-color);
   border-radius: var(--radius-sm);
   font-size: 0.95rem;
+  font-family: var(--font-body);
   color: var(--text-main);
   background-color: #fff;
   transition: var(--transition);
@@ -151,7 +190,7 @@ body {
 }
 
 /* ==========================================================================
-   4. CATALOGO & GRID DE VEÍCULOS
+   4. CATÁLOGO & GRID DE VEÍCULOS (Index)
    ========================================================================== */
 .catalog-grid {
   display: grid;
@@ -225,7 +264,6 @@ body {
   margin-bottom: 1rem;
 }
 
-/* Especificações Técnicas (Ícones / Metadados) */
 .vehicle-specs {
   display: flex;
   justify-content: space-between;
@@ -244,7 +282,6 @@ body {
   gap: 0.35rem;
 }
 
-/* Preços & Ação */
 .vehicle-footer {
   margin-top: auto;
   display: flex;
@@ -270,7 +307,7 @@ body {
 }
 
 /* ==========================================================================
-   5. BOTÕES
+   5. BOTÕES (compartilhado entre todas as páginas)
    ========================================================================== */
 .btn {
   display: inline-flex;
@@ -279,6 +316,7 @@ body {
   padding: 0.65rem 1.25rem;
   font-size: 0.9rem;
   font-weight: 600;
+  font-family: var(--font-body);
   border-radius: var(--radius-sm);
   border: none;
   cursor: pointer;
@@ -304,12 +342,343 @@ body {
   background-color: var(--accent-hover);
 }
 
+.btn-danger {
+  background-color: var(--danger);
+  color: #fff;
+}
+
+.btn-danger:hover {
+  background-color: var(--danger-hover);
+}
+
+.btn-outline {
+  background-color: transparent;
+  color: var(--text-muted);
+  border: 1px solid var(--border-color);
+}
+
+.btn-outline:hover {
+  color: var(--secondary);
+  border-color: var(--secondary);
+}
+
 .btn-full {
   width: 100%;
 }
 
 /* ==========================================================================
-   6. RESPONSIVIDADE
+   6. RODAPÉ (Index)
+   ========================================================================== */
+.site-footer {
+  border-top: 1px solid var(--border-color);
+  padding: 2rem 0;
+  margin-top: 2rem;
+}
+
+.site-footer .container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+.site-footer p {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+}
+
+/* ==========================================================================
+   7. CAMPOS DE FORMULÁRIO PARTILHADOS (Login & Compra)
+   Usa classe própria ".field" para não herdar o estilo do filtro do Index
+   ========================================================================== */
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  margin-bottom: 1.1rem;
+}
+
+.field label {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--secondary);
+}
+
+.field .form-control {
+  padding: 0.75rem 0.9rem;
+  font-size: 1rem;
+}
+
+.field-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+
+@media (max-width: 560px) {
+  .field-row {
+    grid-template-columns: 1fr;
+  }
+}
+
+.botao-voltar-index {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  margin-top: 1.5rem;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  text-decoration: none;
+  transition: var(--transition);
+}
+
+.botao-voltar-index::before {
+  content: "←";
+}
+
+.botao-voltar-index:hover {
+  color: var(--primary);
+}
+
+/* ==========================================================================
+   8. TELA DE LOGIN — painel dividido
+   ========================================================================== */
+.auth-page {
+  min-height: 100vh;
+  display: flex;
+}
+
+.auth-shell {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  width: 100%;
+  min-height: 100vh;
+}
+
+/* Painel esquerdo: identidade da marca + linhas de velocidade animadas */
+.auth-visual {
+  position: relative;
+  background: linear-gradient(160deg, var(--secondary) 0%, var(--secondary-soft) 100%);
+  color: var(--text-on-dark);
+  padding: 2.5rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  overflow: hidden;
+}
+
+.auth-visual__top {
+  position: relative;
+  z-index: 2;
+}
+
+.auth-visual__body {
+  position: relative;
+  z-index: 2;
+  max-width: 26rem;
+}
+
+.auth-visual__body h1 {
+  font-size: 2.1rem;
+  font-weight: 700;
+  line-height: 1.2;
+  margin-bottom: 0.75rem;
+  color: #fff;
+}
+
+.auth-visual__body p {
+  color: var(--text-on-dark);
+  font-size: 1rem;
+}
+
+.speed-lines {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.speed-lines span {
+  position: absolute;
+  right: -40%;
+  height: 2px;
+  border-radius: 999px;
+  background: linear-gradient(90deg, transparent, rgba(2, 132, 199, 0.55), transparent);
+  animation: speed-move 6s linear infinite;
+}
+
+.speed-lines span:nth-child(1) { top: 22%; width: 70%; animation-duration: 5.5s; }
+.speed-lines span:nth-child(2) { top: 40%; width: 45%; animation-duration: 7s; animation-delay: 0.6s; }
+.speed-lines span:nth-child(3) { top: 58%; width: 60%; animation-duration: 6.2s; animation-delay: 1.2s; }
+.speed-lines span:nth-child(4) { top: 76%; width: 35%; animation-duration: 8s; animation-delay: 0.3s; }
+
+@keyframes speed-move {
+  from { transform: translateX(0); opacity: 0; }
+  10%  { opacity: 1; }
+  90%  { opacity: 1; }
+  to   { transform: translateX(-160vw); opacity: 0; }
+}
+
+/* Painel direito: o formulário em si */
+.auth-panel {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2.5rem 1.5rem;
+  background-color: var(--bg-card);
+}
+
+.auth-panel__inner {
+  width: 100%;
+  max-width: 26rem;
+}
+
+.auth-panel__inner h2 {
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: var(--secondary);
+  margin-bottom: 0.35rem;
+}
+
+.auth-panel__lead {
+  color: var(--text-muted);
+  font-size: 0.95rem;
+  margin-bottom: 1.75rem;
+}
+
+/* ==========================================================================
+   9. TELA DE COMPRA — checkout com etapas e resumo
+   ========================================================================== */
+.compra-page {
+  background-color: var(--bg-main);
+}
+
+.checkout-shell {
+  max-width: var(--container-max-width);
+  margin: 0 auto;
+  padding: 2.5rem 1.5rem 4rem;
+}
+
+.checkout-header {
+  margin-bottom: 2rem;
+}
+
+.checkout-header h1 {
+  font-size: 1.9rem;
+  font-weight: 700;
+  color: var(--secondary);
+  margin-bottom: 0.4rem;
+}
+
+.checkout-header p {
+  color: var(--text-muted);
+}
+
+.checkout-layout {
+  display: grid;
+  grid-template-columns: 1.6fr 1fr;
+  gap: 2rem;
+  align-items: start;
+}
+
+.checkout-main {
+  background-color: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-lg);
+  padding: 2rem;
+  box-shadow: var(--shadow-sm);
+}
+
+.step-block {
+  position: relative;
+  padding-left: 2.75rem;
+  padding-bottom: 2rem;
+  margin-bottom: 0.25rem;
+  border-left: 2px solid var(--border-color);
+  margin-left: 0.95rem;
+}
+
+.step-block:last-child {
+  border-left-color: transparent;
+  padding-bottom: 0;
+}
+
+.step-num {
+  position: absolute;
+  top: 0;
+  left: -1rem;
+  width: 2rem;
+  height: 2rem;
+  border-radius: 50%;
+  background-color: var(--primary);
+  color: #fff;
+  font-weight: 700;
+  font-family: var(--font-display);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.9rem;
+}
+
+.step-block h3 {
+  font-size: 1.05rem;
+  color: var(--secondary);
+  margin-bottom: 1rem;
+}
+
+/* Resumo lateral fixo */
+.checkout-summary {
+  background-color: var(--secondary);
+  color: var(--text-on-dark);
+  border-radius: var(--radius-lg);
+  padding: 1.75rem;
+  position: sticky;
+  top: 1.5rem;
+  box-shadow: var(--shadow-lg);
+}
+
+.checkout-summary h3 {
+  color: #fff;
+  font-size: 1.1rem;
+  margin-bottom: 1rem;
+}
+
+.checkout-summary__note {
+  font-size: 0.85rem;
+  color: var(--text-on-dark);
+  opacity: 0.85;
+  line-height: 1.55;
+  margin-bottom: 1.5rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid rgba(226, 232, 240, 0.15);
+}
+
+.checkout-summary .btn-accent {
+  margin-top: 0.5rem;
+}
+
+.checkout-summary__badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.78rem;
+  color: var(--accent);
+  background-color: rgba(22, 163, 74, 0.12);
+  padding: 0.35rem 0.65rem;
+  border-radius: 999px;
+  margin-bottom: 1rem;
+}
+
+.checkout-summary__badge::before {
+  content: "●";
+  font-size: 0.6rem;
+}
+
+/* ==========================================================================
+   10. RESPONSIVIDADE
    ========================================================================== */
 @media (max-width: 768px) {
   .header-inner {
@@ -321,5 +690,26 @@ body {
 
   .search-form {
     grid-template-columns: 1fr;
+  }
+
+  .auth-shell {
+    grid-template-columns: 1fr;
+  }
+
+  .auth-visual {
+    padding: 2rem 1.5rem;
+    min-height: 220px;
+  }
+
+  .auth-visual__body h1 {
+    font-size: 1.6rem;
+  }
+
+  .checkout-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .checkout-summary {
+    position: static;
   }
 }
