@@ -1,103 +1,145 @@
 <?php
-// Inicia a sessão no topo antes de qualquer saída HTML
 session_start();
+
+$usuarioLogado = isset($_SESSION['usuario_id']);
+$tipoUsuario = $usuarioLogado ? $_SESSION['usuario_tipo'] : null;
+
 ?>
+
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Locadora de Veículos - DriveGo</title>
-  <link rel="stylesheet" href="css/estilo.css">
-  <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Locadora de Veículos - DriveGo</title>
+    <link rel="stylesheet" href="css/estilo.css">
+    <script
+        src="https://kit.fontawesome.com/a076d05399.js"
+        crossorigin="anonymous">
+    </script>
 </head>
 <body>
+    <header class="site-header">
 
-  <!-- Header / Navbar -->
-  <header class="site-header">
-    <div class="container header-inner">
-      <a href="index.php" class="brand-logo">Drive<span>Go</span></a>
-      
-      <nav class="main-nav">
-        <a href="#reservas" class="nav-link">Fazer Reserva</a>
-        
-        <?php if (isset($_SESSION['usuario_id'])): ?>
-          <!-- Exibido quando o usuário ESTÁ logado -->
-          <span class="nav-link" style="color: var(--primary); font-weight: bold;">
-            Olá, <?= htmlspecialchars($_SESSION['usuario_nome']); ?>
-          </span>
-          <a href="controller/logoutController.php" class="btn btn-primary" style="background-color: #dc2626;">Sair</a>
-        <?php else: ?>
-          <!-- Exibido quando o usuário NÃO está logado -->
-          <a href="view/loginView.php" class="btn btn-primary">Entrar</a>
-        <?php endif; ?>
-      </nav>
-    </div>
-  </header>
+        <div class="container header-inner">
+            <a href="index.php" class="brand-logo">
+                Drive<span>Go</span>
+            </a>
+            <nav class="main-nav">
 
-  <main class="container">
-    
-    <!-- Widget de Busca / Filtro -->
-    <section class="search-widget" id="reservas">
-      <form class="search-form" action="view/catalogoView.php" method="GET">
-        <div class="form-group">
-          <label for="retirada">Local de Retirada</label>
-          <select id="retirada" name="retirada" class="form-control">
-            <option value="gru">Aeroporto Guarulhos (GRU)</option>
-            <option value="sp-centro">São Paulo - Centro</option>
-          </select>
+                <a href="#reservas" class="nav-link">
+                    Fazer Reserva
+                </a>
+                <?php if ($usuarioLogado): ?>
+                    <?php if ($tipoUsuario === 'funcionario'): ?>
+                        <a href="view/funcionario/veiculosView.php" class="nav-link">
+                            Veículos
+                        </a>
+                        <a href="view/funcionario/marcasView.php" class="nav-link">
+                            Marcas
+                        </a>
+
+                    <?php endif; ?>
+
+                    <span class="nav-link" style="color: var(--primary); font-weight: bold;">
+                        Olá,
+                        <?= htmlspecialchars($_SESSION['usuario_nome']); ?>
+
+                    </span>
+                    <a href="controller/logoutController.php" class="btn btn-primary" style="background-color: #dc2626;">
+                        Sair
+                    </a>
+
+
+                <?php else: ?>
+                    <a href="view/loginView.php" class="btn btn-primary" >
+                        Entrar
+                    </a>
+
+                <?php endif; ?>
+
+            </nav>
+
         </div>
 
-        <div class="form-group">
-          <label for="data-retirada">Data Retirada</label>
-          <input type="date" id="data-retirada" name="data_retirada" class="form-control" required>
-        </div>
+    </header>
 
-        <div class="form-group">
-          <label for="data-devolucao">Data Devolução</label>
-          <input type="date" id="data-devolucao" name="data_devolucao" class="form-control" required>
-        </div>
 
-        <button type="submit" class="btn btn-primary">Buscar Carros</button>
-      </form>
-    </section>
+        <section class="catalog-grid">
+            <article class="vehicle-card">
 
-    <!-- Catálogo de Veículos -->
-    <section class="catalog-grid">
-      
-      <!-- Card de Veículo -->
-      <article class="vehicle-card">
-        <div class="vehicle-image-wrapper">
-          <span class="category-badge">SUV</span>
-          <img src="https://via.placeholder.com/300x180" alt="Jeep Compass" class="vehicle-image">
-        </div>
-        <div class="vehicle-content">
-          <h3 class="vehicle-title">Jeep Compass</h3>
-          <p class="vehicle-subtitle">Ou similar | Grupo SUV</p>
+                <div class="vehicle-image-wrapper">
+                    <span class="category-badge">
+                        
+                    </span>
 
-          <div class="vehicle-specs">
-            <span class="spec-item">5 Lugares</span>
-            <span class="spec-item">Automático</span>
-            <span class="spec-item">Ar-cond.</span>
-          </div>
+                    <img
+                        src="https://via.placeholder.com/300x180"
+                        alt=""
+                        class="vehicle-image"
+                    >
 
-          <div class="vehicle-footer">
-            <div class="price-box">
-              <span class="price-amount">R$ 180</span>
-              <span class="price-period">/ dia</span>
-            </div>
-            
-            <?php if (isset($_SESSION['usuario_id'])): ?>
-              <a href="view/reservaView.php?carro_id=1" class="btn btn-accent">Reservar</a>
-            <?php else: ?>
-              <a href="view/loginView.php?redirect=reserva&carro_id=1" class="btn btn-accent">Reservar</a>
-            <?php endif; ?>
-          </div>
-        </div>
-      </article>
+                </div>
+                <div class="vehicle-content">
 
-    </section>
-  </main>
+                    <h3 class="vehicle-title">
+                        Nome
+                    </h3>
+
+                    <p class="vehicle-subtitle">
+                        
+                    </p>
+
+                    <div class="vehicle-specs">
+                        <span class="spec-item">
+                            lugares
+                        </span>
+
+                        <span class="spec-item">
+                            Automático/manual
+                        </span>
+
+                        <span class="spec-item">
+                            Ar-cond.
+                        </span>
+
+                    </div>
+                    <div class="vehicle-footer">
+                        <div class="price-box">
+
+                            <span class="price-amount">
+                                R$ 67.00
+                            </span>
+
+                            <span class="price-period">
+                                / dia
+                            </span>
+
+                        </div>
+                        <?php if ($usuarioLogado): ?>
+                            <a
+                                href="view/reservaView.php?carro_id=1"
+                                class="btn btn-accent"
+                            >
+                                Reservar
+                            </a>
+
+                        <?php else: ?>
+
+                            <a
+                                href="view/loginView.php?redirect=reserva&carro_id=1"
+                                class="btn btn-accent"
+                            >
+                                Reservar
+                            </a>
+
+                        <?php endif; ?>
+                    </div>
+                </div>
+            </article>
+        </section>
+    </main>
 
 </body>
 </html>

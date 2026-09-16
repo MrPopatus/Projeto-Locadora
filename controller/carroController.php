@@ -31,14 +31,14 @@ if (isset($_POST['btnCadastrar'])) {
 
         echo "<script>
                 alert('Cadastro realizado com sucesso!');
-                window.location.href = '../view/carroView.php';
+                window.location.href = 'carroController.php';
               </script>";
 
     } else {
 
         echo "<script>
                 alert('Erro ao realizar o cadastro. Tente novamente.');
-                window.location.href = '../view/carroView.php';
+                window.location.href = 'carroController.php';
               </script>";
     }
 }

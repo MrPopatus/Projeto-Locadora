@@ -2,16 +2,16 @@
 
 require_once '../controller/conexao.php';
 
-class Carro {
+class Carro
+{
 
-    public function inserir($modelo, $ano, $renavam, $valorDiaria, $idMarca) {
+    public function inserir($modelo, $ano, $renavam, $valorDiaria, $idMarca)
+    {
 
         try {
 
-            $sql = "INSERT INTO veiculo 
-                    (modelo, ano, renavam, valorDiaria)
-                    VALUES 
-                    (:m, :a, :r, :v, :marca)";
+            $sql = "INSERT INTO veiculo (modelo, ano, renavam, valorDiaria, idMarcaV) 
+                    VALUES (:m, :a, :r, :v, :marca)";
 
             $conexao = Conexao::conectar();
 
@@ -24,7 +24,6 @@ class Carro {
             $stmt->bindParam(":marca", $idMarca);
 
             return $stmt->execute();
-
         } catch (PDOException $e) {
 
             error_log("Erro ao inserir veículo: " . $e->getMessage());
@@ -33,5 +32,3 @@ class Carro {
         }
     }
 }
-
-?>

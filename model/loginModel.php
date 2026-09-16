@@ -1,28 +1,31 @@
 <?php
+
 require_once '../controller/conexao.php';
 
-class Cliente {
-    
-    public function inserir($nomeCliente, $telefone, $email, $senha) {
+class Login {
+
+   public function buscarPorEmail($email){
         try {
-            $sql = "INSERT INTO cliente (nomeCliente, telefone, email, senha) VALUES (:n, :t, :c, :e)";
-            
+
+            $sql = "SELECT * FROM cliente
+                    WHERE email = :email";
+
             $conexao = Conexao::conectar();
+
             $stmt = $conexao->prepare($sql);
-            
-            $stmt->bindParam(":n", $nomeCliente);
-            $stmt->bindParam(":t", $telefone);
-            $stmt->bindParam(":c", $email);
-            $stmt->bindParam(":e", $senha);
-            
-            // Executa e retorna true em caso de sucesso
-            return $stmt->execute();
+
+            $stmt->bindParam(':email', $email);
+
+            $stmt->execute();
+
+            return $stmt->fetch(PDO::FETCH_ASSOC);
 
         } catch (PDOException $e) {
-            // Em ambiente de produção, grave no log em vez de dar echo no erro
-            error_log("Erro ao inserir cliente: " . $e->getMessage());
+
+            error_log("Erro ao buscar cliente: " . $e->getMessage());
+
             return false;
         }
-    }
+   }
 }
 ?>

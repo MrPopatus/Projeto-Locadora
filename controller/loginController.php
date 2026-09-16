@@ -1,32 +1,33 @@
 <?php
-    require_once '../model/loginModel.php';
-    if(isset($_POST['btnLogar'])){
-        $nomeCliente = $_POST['nome'];
-        $telefone = $_POST['tel'];
-        $email = $_POST['email'];
-        $senha = $_POST['senha'];
 
-        $clienteModel = new Cliente(); 
-        $sucesso = $clienteModel->inserir($nomeCliente, $telefone, $email, $senha);
+require_once '../model/loginModel.php';
 
-        if ($sucesso) {
-            echo "<script>
-                    alert('Cadastro realizado com sucesso!');
-                    window.location.href = '../view/loginView.php';
-                    header('Location: ../view/loginView.php?status=sucesso');
-                    exit();
-                </script>";
-              
-                // Redireciona via PHP com parâmetro de mensagem
-                
+session_start();
 
-        } else {
-            echo "<script>
-                    alert('Erro ao realizar o cadastro. Tente novamente.');
-                    window.location.href = '../view/cadastroView.php';
-                </script>";
-        }
+if (isset($_POST['btnLogar'])) {
 
- 
+    $email = $_POST['email'];
+    $senha = $_POST['senha'];
+
+    $loginModel = new Login();
+
+    $usuario = $loginModel->buscarPorEmail($email);
+
+    if (!$usuario) {
+
+        echo "<script>
+                alert('E-mail ou senha incorretos.');
+                window.location.href = '../view/loginView.php';
+              </script>";
+
+        exit;
     }
-?>
+
+    $_SESSION['usuario_id'] = $usuario['idCliente'];
+    $_SESSION['usuario_nome'] = $usuario['nomeCliente'];
+    $_SESSION['usuario_tipo'] = $usuario['tipoUsuario'];
+
+    header("Location: ../index.php");
+
+    exit;
+}
