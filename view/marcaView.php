@@ -41,8 +41,8 @@
             </form>
 
             <div class="form-secondary-action">
-                <a href="../index.php">
-                    ← Voltar ao Início
+                <a href="../index.php"> 
+                    Voltar ao Início
                 </a>
             </div>
 

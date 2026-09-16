@@ -12,9 +12,6 @@ if (isset($_POST['btnCadastrar'])) {
                     window.location.href = '../view/marcaView.php';
                 </script>";
 
-        // Redireciona via PHP com parâmetro de mensagem
-
-
     } else {
         echo "<script>
                     alert('Erro ao realizar o cadastro. Tente novamente.');

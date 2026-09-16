@@ -31,4 +31,25 @@ class Carro
             return false;
         }
     }
+
+    public function listarCarros() {
+
+        try {
+             $sql = "SELECT *  
+                    FROM veiculo 
+                    ORDER BY modelo";
+
+            $conexao = Conexao::conectar();
+
+            $stmt = $conexao->prepare($sql);
+            $stmt->execute();
+
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        } catch (PDOException $e) {
+
+            error_log("Erro ao listar carros: " . $e->getMessage());
+            return [];
+        }
+    }
 }

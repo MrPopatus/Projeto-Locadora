@@ -1,5 +1,4 @@
 <?php
-// Se a view for acessada diretamente sem passar pelo controller
 if (!isset($marcas)) {
     require_once '../model/marcaModel.php';
     $marcaModel = new Marca();
