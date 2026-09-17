@@ -51,9 +51,28 @@ select * from veiculo;
 -- drop database locadora
 
 alter table cliente add column tipoUsuario enum('cliente', 'funcionario')
-NOT NULL DEFAULT 'cliente';
+not null default 'cliente';
+
+alter table veiculo add column  imagemVeiculo varchar(255) not null;
 
 insert into cliente
 (nomeCliente, telefone, email, senha, tipoUsuario)
 values
 ('admin', '676767676767676', 'admin@gmail.com', '123', 'funcionario');
+
+
+alter table locacao
+drop index cpf;
+
+alter table locacao
+drop index cnh;
+
+select * from locacao;
+
+alter table locacao
+add column statusLocacao enum(
+    'reservado',
+    'ativo',
+    'finalizado',
+    'cancelado'
+) not null default 'reservado';

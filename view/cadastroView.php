@@ -6,7 +6,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Login</title>
+    <title>Criar conta | DriveGo</title>
 
     <link rel="stylesheet" href="../css/estilo.css">
 </head>
@@ -18,8 +18,9 @@
         <section class="form-card">
 
             <header class="form-header">
-                <h1>Fazer Login</h1>
-                <p>Entre na sua conta para continuar.</p>
+                <span class="eyebrow">Comece agora</span>
+                <h1>Crie sua conta</h1>
+                <p>Cadastre seus dados para fazer sua primeira reserva.</p>
             </header>
 
             <form action="../controller/cadastroController.php" method="POST">
@@ -82,7 +83,7 @@
 
             <div class="form-secondary-action">
                 <a href="../index.php">
-                     Voltar ao Início
+                     Voltar ao início
                 </a>
             </div>
 

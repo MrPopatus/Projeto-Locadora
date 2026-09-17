@@ -21,7 +21,9 @@ if (!isset($marcas)) {
         <section class="form-card">
 
             <header class="form-header">
+                <span class="eyebrow">Painel administrativo</span>
                 <h1>Cadastrar Veículo</h1>
+                <p>Inclua um novo modelo para exibi-lo na frota disponível.</p>
             </header>
 
             <form action="../controller/carroController.php" method="POST">
@@ -87,6 +89,15 @@ if (!isset($marcas)) {
                         name="valor"
                         class="form-control"
                         placeholder="Ex: 150.00"
+                        required>
+                </div>
+                <div class="field">
+                    <label for="imagemVeiculo">URL da imagem</label>
+                    <input
+                        type="text"
+                        id="imagemVeiculo"
+                        name="imagemVeiculo"
+                        class="form-control"
                         required>
                 </div>
 

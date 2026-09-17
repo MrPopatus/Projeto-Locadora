@@ -17,10 +17,8 @@ class Cliente
             $stmt->bindParam(":email", $email);
             $stmt->bindParam(":senha", $senha);
 
-            // Executa e retorna true em caso de sucesso
             return $stmt->execute();
         } catch (PDOException $e) {
-            // Em ambiente de produção, grave no log em vez de dar echo no erro
             error_log("Erro ao inserir cliente: " . $e->getMessage());
             return false;
         }

@@ -1,17 +1,17 @@
 <?php
 
-require_once '../controller/conexao.php';
+require_once __DIR__ . '/../controller/conexao.php';
 
 class Carro
 {
 
-    public function inserir($modelo, $ano, $renavam, $valorDiaria, $idMarca)
+    public function inserir($modelo, $ano, $renavam, $valorDiaria, $idMarca, $imagemVeiculo)
     {
-
         try {
 
-            $sql = "INSERT INTO veiculo (modelo, ano, renavam, valorDiaria, idMarcaV) 
-                    VALUES (:m, :a, :r, :v, :marca)";
+            $sql = "INSERT INTO veiculo 
+                    (modelo, ano, renavam, valorDiaria, idMarcaV, imagemVeiculo)
+                    VALUES (:m, :a, :r, :v, :marca, :imagem)";
 
             $conexao = Conexao::conectar();
 
@@ -22,8 +22,10 @@ class Carro
             $stmt->bindParam(":r", $renavam);
             $stmt->bindParam(":v", $valorDiaria);
             $stmt->bindParam(":marca", $idMarca);
+            $stmt->bindParam(":imagem", $imagemVeiculo);
 
             return $stmt->execute();
+
         } catch (PDOException $e) {
 
             error_log("Erro ao inserir veículo: " . $e->getMessage());
@@ -32,12 +34,21 @@ class Carro
         }
     }
 
-    public function listarCarros() {
 
+    public function listarCarros()
+    {
         try {
-             $sql = "SELECT *  
-                    FROM veiculo 
-                    ORDER BY modelo";
+
+            $sql = "SELECT
+                        v.idVeiculo,
+                        v.modelo,
+                        v.ano,
+                        v.valorDiaria,
+                        v.imagemVeiculo,
+                        m.nomeMarca
+                    FROM veiculo v
+                    INNER JOIN marca m
+                        ON v.idMarcaV = m.idMarca";
 
             $conexao = Conexao::conectar();
 
@@ -49,7 +60,105 @@ class Carro
         } catch (PDOException $e) {
 
             error_log("Erro ao listar carros: " . $e->getMessage());
+
             return [];
         }
     }
+
+
+    public function buscarPorId($id)
+    {
+        try {
+
+            $sql = "SELECT
+                        v.idVeiculo,
+                        v.modelo,
+                        v.ano,
+                        v.renavam,
+                        v.valorDiaria,
+                        v.imagemVeiculo,
+                        m.nomeMarca,
+                        v.idMarcaV
+                    FROM veiculo v
+                    INNER JOIN marca m
+                        ON v.idMarcaV = m.idMarca
+                    WHERE v.idVeiculo = :id";
+
+            $conexao = Conexao::conectar();
+
+            $stmt = $conexao->prepare($sql);
+            $stmt->bindParam(":id", $id);
+            $stmt->execute();
+
+            return $stmt->fetch(PDO::FETCH_ASSOC);
+
+        } catch (PDOException $e) {
+
+            error_log("Erro ao buscar veículo: " . $e->getMessage());
+
+            return false;
+        }
+    }
+
+    public function editar(
+    $id,
+    $modelo,
+    $ano,
+    $renavam,
+    $valorDiaria,
+    $idMarca,
+    $imagemVeiculo
+) {
+    try {
+
+        $sql = "UPDATE veiculo
+                SET modelo = :modelo,
+                    ano = :ano,
+                    renavam = :renavam,
+                    valorDiaria = :valor,
+                    idMarcaV = :marca,
+                    imagemVeiculo = :imagem
+                WHERE idVeiculo = :id";
+
+        $conexao = Conexao::conectar();
+
+        $stmt = $conexao->prepare($sql);
+
+        $stmt->bindParam(":modelo", $modelo);
+        $stmt->bindParam(":ano", $ano);
+        $stmt->bindParam(":renavam", $renavam);
+        $stmt->bindParam(":valor", $valorDiaria);
+        $stmt->bindParam(":marca", $idMarca);
+        $stmt->bindParam(":imagem", $imagemVeiculo);
+        $stmt->bindParam(":id", $id);
+
+        return $stmt->execute();
+
+    } catch (PDOException $e) {
+
+        die("Erro ao editar veículo: " . $e->getMessage());
+    }
+}
+
+public function excluir($id)
+{
+    try {
+
+        $sql = "DELETE FROM veiculo WHERE idVeiculo = :id";
+
+        $conexao = Conexao::conectar();
+
+        $stmt = $conexao->prepare($sql);
+
+        $stmt->bindParam(":id", $id);
+
+        return $stmt->execute();
+
+    } catch (PDOException $e) {
+
+        error_log("Erro ao excluir veículo: " . $e->getMessage());
+
+        return false;
+    }
+}
 }

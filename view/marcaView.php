@@ -12,13 +12,15 @@
         <section class="form-card">
 
             <header class="form-header">
+                <span class="eyebrow">Painel administrativo</span>
                 <h1>Cadastrar Marcas</h1>
+                <p>Adicione uma marca para disponibilizá-la no cadastro de veículos.</p>
             </header>
 
             <form action="../controller/marcaController.php" method="POST">
 
                 <div class="field">
-                    <label for="marca">nome da marca</label>
+                    <label for="marca">Nome da marca</label>
                     <input
                         type="text"
                         id="marca"

@@ -1,10 +1,14 @@
 <?php
-session_start();
+  session_start();
 
-$usuarioLogado = isset($_SESSION['usuario_id']);
-$tipoUsuario = $usuarioLogado ? $_SESSION['usuario_tipo'] : null;
+  $usuarioLogado = isset($_SESSION['usuario_id']);
+  $tipoUsuario = $usuarioLogado ? $_SESSION['usuario_tipo'] : null;
 
+  require_once 'model/carroModel.php';
 
+  $carroModel = new Carro();
+
+  $carros = $carroModel->listarCarros();
 ?>
 
 <!DOCTYPE html>
@@ -40,17 +44,12 @@ $tipoUsuario = $usuarioLogado ? $_SESSION['usuario_tipo'] : null;
                         </a>
 
                     <?php endif; ?>
-                    <a href="#reservas" class="nav-link">
-                       Fazer Reserva
-                    </a>
-
-                    <span class="nav-link" style="color: var(--primary); font-weight: bold;">
+                    <span class="nav-user">
                         Olá,
                         <?= htmlspecialchars($_SESSION['usuario_nome']); ?>
 
                     </span>
-,
-                    <a href="controller/logoutController.php" class="btn btn-primary" style="background-color: #dc2626;">
+                    <a href="controller/logoutController.php" class="btn btn-danger">
                         Sair
                     </a>
 
@@ -70,9 +69,95 @@ $tipoUsuario = $usuarioLogado ? $_SESSION['usuario_tipo'] : null;
         </div>
 
     </header>
-        <section class="catalog-grid">
-              
+    <main>
+        <section class="hero">
+            <div class="container hero__content">
+                <span class="eyebrow eyebrow--light">Locação simples e segura</span>
+                <h1>O carro certo para cada caminho.</h1>
+                <p>Escolha seu veículo, reserve online e saia dirigindo com tranquilidade.</p>
+                <a href="#veiculos" class="btn btn-accent">Ver veículos</a>
+            </div>
+        </section>
+        <section class="container catalog-section" id="veiculos">
+            <div class="section-heading">
+                <div><span class="eyebrow">Nossa frota</span><h2>Veículos disponíveis</h2></div>
+                <p>Modelos revisados, prontos para a sua próxima viagem.</p>
+            </div>
+            <div class="catalog-grid">
+
+            <?php foreach ($carros as $carro): ?>
+
+                <article class="vehicle-card">
+
+                    <div class="vehicle-image-wrapper">
+                        <img 
+                            src="<?= htmlspecialchars($carro['imagemVeiculo']); ?>"
+                            alt="<?= htmlspecialchars($carro['modelo']); ?>"
+                            class="vehicle-image"
+                        >
+
+                    </div>
+
+                    <div class="vehicle-content">
+
+                        <h3 class="vehicle-title">
+                            <?= htmlspecialchars($carro['nomeMarca']); ?>
+                            <?= htmlspecialchars($carro['modelo']); ?>
+                        </h3>
+
+                        <p class="vehicle-subtitle">
+                            Ano <?= htmlspecialchars($carro['ano']); ?>
+                        </p>
+
+                        <div class="vehicle-footer">
+                            <div class="price-box">
+                                <span class="price-amount">
+                                    R$ <?= number_format($carro['valorDiaria'], 2, ',', '.'); ?>
+                                </span>
+
+                                <span class="price-period">
+                                    / dia
+                                </span>
+
+                            </div>
+
+
+                            <?php if ($usuarioLogado && $tipoUsuario === 'funcionario'): ?>
+
+                                <a 
+                                    href="view/editarView.php?id=<?= $carro['idVeiculo']; ?>"
+                                    class="btn btn-primary"
+                                >
+                                    Editar
+                                </a>
+
+                            <?php else: ?>
+
+                                <a 
+                                    href="view/detalhesView.php?id=<?= $carro['idVeiculo']; ?>"
+                                    class="btn btn-accent"
+                                >
+                                    Detalhes
+                                </a>
+
+                            <?php endif; ?>
+
+                            
+                        </div>
+
+                    </div>
+
+                </article>
+
+            <?php endforeach; ?>
+
+            <?php if (empty($carros)): ?>
+                <div class="empty-state"><h3>Nenhum veículo disponível agora</h3><p>Volte em breve para conferir a nossa frota.</p></div>
+            <?php endif; ?>
+            </div>
+
         </section>
     </main>
+    <footer class="site-footer"><div class="container"><a href="index.php" class="brand-logo">Drive<span>Go</span></a><p>&copy; <?= date('Y'); ?> DriveGo. Mobilidade para o seu dia.</p></div></footer>
 </body>
 </html>
