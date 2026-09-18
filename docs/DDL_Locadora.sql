@@ -76,3 +76,19 @@ add column statusLocacao enum(
     'finalizado',
     'cancelado'
 ) not null default 'reservado';
+
+
+create table manutencao (
+    idManutencao int auto_increment primary key ,
+    idVeiculoM int not null,
+    tipo varchar(50) not null,
+    descricao text,
+    dataInicio date not null,
+    dataFim date not null,
+    custo decimal(10,2) default 0,
+    status enum('agendada', 'em_andamento', 'finalizada', 'cancelada')
+        default 'agendada',
+
+    foreign key (idVeiculoM)
+        references veiculo(idVeiculo)
+);

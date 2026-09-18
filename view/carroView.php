@@ -26,7 +26,7 @@ if (!isset($marcas)) {
                 <p>Inclua um novo modelo para exibi-lo na frota disponível.</p>
             </header>
 
-            <form action="../controller/carroController.php" method="POST">
+            <form action="../controller/carroController.php" method="POST" enctype="multipart/form-data">
 
                 <div class="field">
                     <label for="marca">Marca:</label>
@@ -92,15 +92,14 @@ if (!isset($marcas)) {
                         required>
                 </div>
                 <div class="field">
-                    <label for="imagemVeiculo">URL da imagem</label>
+                    <label for="imagemVeiculo">Upload de uma imagem do veículo</label>
                     <input
-                        type="text"
-                        id="imagemVeiculo"
+                        type="file"
                         name="imagemVeiculo"
-                        class="form-control"
+                        id="imagemVeiculo"
+                        accept="image/png, image/jpeg, image/webp"
                         required>
                 </div>
-
                 <div class="form-submit">
                     <button
                         type="submit"

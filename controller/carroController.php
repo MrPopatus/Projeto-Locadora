@@ -3,6 +3,47 @@
 require_once '../model/marcaModel.php';
 require_once '../model/carroModel.php';
 
+function salvarImagemVeiculo($campo)
+{
+    if (!isset($_FILES[$campo]) || $_FILES[$campo]['error'] === UPLOAD_ERR_NO_FILE) {
+        return null;
+    }
+
+    if ($_FILES[$campo]['error'] !== UPLOAD_ERR_OK) {
+        throw new RuntimeException('Ocorreu um erro ao enviar a imagem.');
+    }
+
+    if ($_FILES[$campo]['size'] > 5 * 1024 * 1024) {
+        throw new RuntimeException('A imagem deve ter no máximo 5 MB.');
+    }
+
+    $tiposPermitidos = [
+        'image/jpeg' => 'jpg',
+        'image/png' => 'png',
+        'image/webp' => 'webp'
+    ];
+
+    $finfo = new finfo(FILEINFO_MIME_TYPE);
+    $tipoImagem = $finfo->file($_FILES[$campo]['tmp_name']);
+
+    if (!isset($tiposPermitidos[$tipoImagem])) {
+        throw new RuntimeException('Envie uma imagem JPG, PNG ou WEBP.');
+    }
+
+    $nomeArquivo = bin2hex(random_bytes(16)) . '.' . $tiposPermitidos[$tipoImagem];
+    $diretorio = __DIR__ . '/../img/veiculos/';
+
+    if (!is_dir($diretorio) && !mkdir($diretorio, 0755, true)) {
+        throw new RuntimeException('Não foi possível preparar a pasta das imagens.');
+    }
+
+    if (!move_uploaded_file($_FILES[$campo]['tmp_name'], $diretorio . $nomeArquivo)) {
+        throw new RuntimeException('Não foi possível salvar a imagem.');
+    }
+
+    return 'img/veiculos/' . $nomeArquivo;
+}
+
 if (
     !isset($_POST['btnCadastrar']) &&
     !isset($_POST['btnEditar']) &&
@@ -26,7 +67,20 @@ if (isset($_POST['btnCadastrar'])) {
     $renavam = $_POST['renavam'];
     $valorDiaria = $_POST['valor'];
     $idMarca = $_POST['marca'];
-    $imagemVeiculo = $_POST['imagemVeiculo'];
+
+    try {
+        $imagemVeiculo = salvarImagemVeiculo('imagemVeiculo');
+
+        if ($imagemVeiculo === null) {
+            throw new RuntimeException('Selecione uma imagem para o veículo.');
+        }
+    } catch (RuntimeException $e) {
+        echo "<script>
+                alert(" . json_encode($e->getMessage()) . ");
+                window.history.back();
+              </script>";
+        exit();
+    }
 
     $carroModel = new Carro();
 
@@ -43,7 +97,7 @@ if (isset($_POST['btnCadastrar'])) {
 
         echo "<script>
                 alert('Cadastro realizado com sucesso!');
-                window.location.href = '../index.php.php';
+                window.location.href = '../index.php';
               </script>";
 
     } else {
@@ -64,9 +118,27 @@ if (isset($_POST['btnEditar'])) {
     $renavam = $_POST['renavam'];
     $valorDiaria = $_POST['valorDiaria'];
     $idMarca = $_POST['idMarca'];
-    $imagemVeiculo = $_POST['imagemVeiculo'];
 
     $carroModel = new Carro();
+
+    try {
+        $imagemVeiculo = salvarImagemVeiculo('imagemVeiculo');
+
+        if ($imagemVeiculo === null) {
+            $carroAtual = $carroModel->buscarPorId($id);
+            $imagemVeiculo = $carroAtual['imagemVeiculo'] ?? null;
+        }
+
+        if ($imagemVeiculo === null) {
+            throw new RuntimeException('Não foi possível localizar a imagem atual do veículo.');
+        }
+    } catch (RuntimeException $e) {
+        echo "<script>
+                alert(" . json_encode($e->getMessage()) . ");
+                window.history.back();
+              </script>";
+        exit();
+    }
 
     $sucesso = $carroModel->editar(
         $id,

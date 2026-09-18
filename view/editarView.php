@@ -87,6 +87,7 @@ if (!$carro) {
         <form
             action="../controller/carroController.php"
             method="POST"
+            enctype="multipart/form-data"
         >
             <input
                 type="hidden"
@@ -193,17 +194,18 @@ if (!$carro) {
             <div class="field">
 
                 <label for="imagemVeiculo">
-                    Caminho da imagem
+                    Substituir imagem do veículo
                 </label>
 
                 <input
-                    type="text"
+                    type="file"
                     id="imagemVeiculo"
                     name="imagemVeiculo"
-                    value="<?= htmlspecialchars($carro['imagemVeiculo']); ?>"
                     class="form-control"
-                    required
+                    accept="image/png, image/jpeg, image/webp"
                 >
+
+                <small>Deixe em branco para manter a imagem atual.</small>
 
             </div>
 
@@ -216,8 +218,7 @@ if (!$carro) {
                 <img
                     src="../<?= htmlspecialchars($carro['imagemVeiculo']); ?>"
                     alt="<?= htmlspecialchars($carro['modelo']); ?>"
-                    class="vehicle-image"
-                    style="height: 180px; width: 100%; object-fit: contain; background: #0c1016; border-radius: 10px;"
+                    class="vehicle-preview"
                 >
 
             </div>

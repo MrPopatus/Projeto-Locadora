@@ -36,12 +36,38 @@
                 
                 <?php if ($usuarioLogado): ?>
                     <?php if ($tipoUsuario === 'funcionario'): ?>
-                        <a href="view/carroView.php" class="nav-link">
-                            Veículos
-                        </a>
-                        <a href="view/marcaView.php" class="nav-link">
-                            Marcas
-                        </a>
+                        <div class="admin-menu-wrapper">
+                            <button
+                                type="button"
+                                class="admin-menu-toggle"
+                                aria-expanded="false"
+                                aria-controls="admin-menu"
+                                aria-label="Abrir menu administrativo"
+                            >
+                                <span></span>
+                                <span></span>
+                                <span></span>
+                            </button>
+
+                            <nav id="admin-menu" class="admin-menu" aria-label="Menu administrativo">
+                                <span class="admin-menu__title">Administração</span>
+                                <span class="admin-menu__item admin-menu__item--disabled" aria-disabled="true">
+                                    Dashboard <small>em breve</small>
+                                </span>
+                                <a href="view/carroView.php" class="admin-menu__item">
+                                    Cadastrar veículo
+                                </a>
+                                <a href="view/marcaView.php" class="admin-menu__item">
+                                    Cadastrar marca
+                                </a>
+                                <span class="admin-menu__item admin-menu__item--disabled" aria-disabled="true">
+                                    Clientes <small>em breve</small>
+                                </span>
+                                <a href="view/manutencaoView.php" class="admin-menu__item">
+                                    Manutenções
+                                </a>
+                            </nav>
+                        </div>
 
                     <?php endif; ?>
                     <span class="nav-user">
@@ -159,5 +185,31 @@
         </section>
     </main>
     <footer class="site-footer"><div class="container"><a href="index.php" class="brand-logo">Drive<span>Go</span></a><p>&copy; <?= date('Y'); ?> DriveGo. Mobilidade para o seu dia.</p></div></footer>
+    <script>
+        const menuButton = document.querySelector('.admin-menu-toggle');
+        const adminMenu = document.querySelector('.admin-menu');
+
+        if (menuButton && adminMenu) {
+            menuButton.addEventListener('click', () => {
+                const aberto = menuButton.getAttribute('aria-expanded') === 'true';
+                menuButton.setAttribute('aria-expanded', String(!aberto));
+                adminMenu.classList.toggle('admin-menu--open', !aberto);
+            });
+
+            document.addEventListener('click', (event) => {
+                if (!event.target.closest('.admin-menu-wrapper')) {
+                    menuButton.setAttribute('aria-expanded', 'false');
+                    adminMenu.classList.remove('admin-menu--open');
+                }
+            });
+
+            document.addEventListener('keydown', (event) => {
+                if (event.key === 'Escape') {
+                    menuButton.setAttribute('aria-expanded', 'false');
+                    adminMenu.classList.remove('admin-menu--open');
+                }
+            });
+        }
+    </script>
 </body>
 </html>
