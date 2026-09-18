@@ -1,5 +1,12 @@
 <?php
 
+session_start();
+
+if (!isset($_SESSION['usuario_id']) || ($_SESSION['usuario_tipo'] ?? '') !== 'funcionario') {
+    header('Location: ../view/loginView.php');
+    exit;
+}
+
 require_once '../model/carroModel.php';
 
 $carroModel = new Carro();
@@ -177,6 +184,23 @@ if (!$carro) {
 
             <div class="field">
 
+                <label for="statusVeiculo">
+                    Estado do veículo
+                </label>
+
+                <select id="statusVeiculo" name="statusVeiculo" class="form-control" required>
+                    <option value="ativo" <?= $carro['statusVeiculo'] === 'ativo' ? 'selected' : ''; ?>>Ativo — disponível para locação</option>
+                    <option value="reservado" <?= $carro['statusVeiculo'] === 'reservado' ? 'selected' : ''; ?>>Reservado</option>
+                    <option value="inativo" <?= $carro['statusVeiculo'] === 'inativo' ? 'selected' : ''; ?>>Inativo — temporariamente indisponível</option>
+                    <option value="cancelado" <?= $carro['statusVeiculo'] === 'cancelado' ? 'selected' : ''; ?>>Cancelado — fora de operação</option>
+                </select>
+
+                <small>Este estado será mostrado ao cliente na página de detalhes.</small>
+
+            </div>
+
+            <div class="field">
+
                 <label for="renavam">
                     RENAVAM
                 </label>
@@ -249,7 +273,7 @@ if (!$carro) {
 
             <div class="form-secondary-action">
 
-                <a href="carroView.php">
+                <a href="../index.php">
                     Cancelar
                 </a>
 

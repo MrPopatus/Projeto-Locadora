@@ -12,7 +12,7 @@ if (isset($_POST['btnLogar'])) {
     if ($sucesso) {
         echo "<script>
                     alert('Cadastro realizado com sucesso!');
-                    window.location.href = '../index.php';
+                    window.location.href = '../view/loginView.php';
                 </script>";
 
 

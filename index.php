@@ -60,9 +60,9 @@
                                 <a href="view/marcaView.php" class="admin-menu__item">
                                     Cadastrar marca
                                 </a>
-                                <span class="admin-menu__item admin-menu__item--disabled" aria-disabled="true">
-                                    Clientes <small>em breve</small>
-                                </span>
+                                <a href="view/clienteView.php" class="admin-menu__item">
+                                    Clientes
+                                </a>
                                 <a href="view/manutencaoView.php" class="admin-menu__item">
                                     Manutenções
                                 </a>

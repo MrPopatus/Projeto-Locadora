@@ -3,6 +3,16 @@
 require_once '../model/marcaModel.php';
 require_once '../model/carroModel.php';
 
+session_start();
+
+if (
+    (isset($_POST['btnEditar']) || isset($_POST['btnExcluir'])) &&
+    (!isset($_SESSION['usuario_id']) || ($_SESSION['usuario_tipo'] ?? '') !== 'funcionario')
+) {
+    header('Location: ../view/loginView.php');
+    exit;
+}
+
 function salvarImagemVeiculo($campo)
 {
     if (!isset($_FILES[$campo]) || $_FILES[$campo]['error'] === UPLOAD_ERR_NO_FILE) {
@@ -118,6 +128,13 @@ if (isset($_POST['btnEditar'])) {
     $renavam = $_POST['renavam'];
     $valorDiaria = $_POST['valorDiaria'];
     $idMarca = $_POST['idMarca'];
+    $statusVeiculo = $_POST['statusVeiculo'] ?? '';
+    $statusPermitidos = ['ativo', 'reservado', 'inativo', 'cancelado'];
+
+    if (!in_array($statusVeiculo, $statusPermitidos, true)) {
+        echo "<script>alert('Status do veículo inválido.'); window.history.back();</script>";
+        exit;
+    }
 
     $carroModel = new Carro();
 
@@ -147,21 +164,22 @@ if (isset($_POST['btnEditar'])) {
         $renavam,
         $valorDiaria,
         $idMarca,
-        $imagemVeiculo
+        $imagemVeiculo,
+        $statusVeiculo
     );
 
     if ($sucesso) {
 
         echo "<script>
                 alert('Veículo atualizado com sucesso!');
-                window.location.href = '../view/editarView.php';
+                window.location.href = '../view/editarView.php?id=" . urlencode($id) . "';
               </script>";
 
     } else {
 
         echo "<script>
                 alert('Erro ao atualizar o veículo.');
-                window.location.href = '../view/editarView.php';
+                window.location.href = '../view/editarView.php?id=" . urlencode($id) . "';
               </script>";
     }
 }

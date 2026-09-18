@@ -22,7 +22,19 @@ if (!$carro) {
 
 $reserva2Model = new Reserva();
 
-$disponivel = $reserva2Model->estaDisponivel($carro['idVeiculo']);
+$statusVeiculo = $carro['statusVeiculo'] ?? 'ativo';
+$statusInfo = [
+    'ativo' => ['titulo' => 'Disponível para locação', 'mensagem' => 'Este veículo está ativo e pode ser reservado.', 'classe' => 'vehicle-availability--active'],
+    'reservado' => ['titulo' => 'Veículo reservado', 'mensagem' => 'Este veículo já está reservado e não pode receber uma nova solicitação agora.', 'classe' => 'vehicle-availability--reserved'],
+    'inativo' => ['titulo' => 'Temporariamente indisponível', 'mensagem' => 'Este veículo está inativo e não está disponível para locação no momento.', 'classe' => 'vehicle-availability--inactive'],
+    'cancelado' => ['titulo' => 'Veículo fora de operação', 'mensagem' => 'Este veículo foi retirado da operação e não pode ser reservado.', 'classe' => 'vehicle-availability--cancelled'],
+];
+$avisoStatus = $statusInfo[$statusVeiculo] ?? $statusInfo['inativo'];
+$disponivel = $statusVeiculo === 'ativo' && $reserva2Model->estaDisponivel($carro['idVeiculo']);
+
+if ($statusVeiculo === 'ativo' && !$disponivel) {
+    $avisoStatus = ['titulo' => 'Veículo reservado', 'mensagem' => 'Este veículo já possui uma reserva ou locação em andamento.', 'classe' => 'vehicle-availability--reserved'];
+}
 
 ?>
 
@@ -117,6 +129,11 @@ $disponivel = $reserva2Model->estaDisponivel($carro['idVeiculo']);
                     <?= htmlspecialchars($carro['ano']); ?>
 
                 </p>
+
+                <div class="vehicle-availability <?= htmlspecialchars($avisoStatus['classe']); ?>" role="status">
+                    <strong><?= htmlspecialchars($avisoStatus['titulo']); ?></strong>
+                    <span><?= htmlspecialchars($avisoStatus['mensagem']); ?></span>
+                </div>
                 <div class="vehicle-specs">
 
                     <div class="spec-item">
@@ -168,7 +185,7 @@ $disponivel = $reserva2Model->estaDisponivel($carro['idVeiculo']);
                     <?php else: ?>
 
                         <button class="btn btn-terciary" disabled>
-                            Veículo reservado
+                            <?= htmlspecialchars($avisoStatus['titulo']); ?>
                         </button>
 
                     <?php endif; ?>

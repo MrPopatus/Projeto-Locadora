@@ -45,6 +45,7 @@ class Carro
                         v.ano,
                         v.valorDiaria,
                         v.imagemVeiculo,
+                        v.statusVeiculo,
                         m.nomeMarca
                     FROM veiculo v
                     INNER JOIN marca m
@@ -77,6 +78,7 @@ class Carro
                         v.renavam,
                         v.valorDiaria,
                         v.imagemVeiculo,
+                        v.statusVeiculo,
                         m.nomeMarca,
                         v.idMarcaV
                     FROM veiculo v
@@ -101,64 +103,67 @@ class Carro
     }
 
     public function editar(
-    $id,
-    $modelo,
-    $ano,
-    $renavam,
-    $valorDiaria,
-    $idMarca,
-    $imagemVeiculo
-) {
-    try {
+        $id,
+        $modelo,
+        $ano,
+        $renavam,
+        $valorDiaria,
+        $idMarca,
+        $imagemVeiculo,
+        $statusVeiculo
+    ) {
+        try {
 
-        $sql = "UPDATE veiculo
-                SET modelo = :modelo,
-                    ano = :ano,
-                    renavam = :renavam,
-                    valorDiaria = :valor,
-                    idMarcaV = :marca,
-                    imagemVeiculo = :imagem
-                WHERE idVeiculo = :id";
+            $sql = "UPDATE veiculo
+                    SET modelo = :modelo,
+                        ano = :ano,
+                        renavam = :renavam,
+                        valorDiaria = :valor,
+                        idMarcaV = :marca,
+                        imagemVeiculo = :imagem,
+                        statusVeiculo = :statusVeiculo
+                    WHERE idVeiculo = :id";
 
-        $conexao = Conexao::conectar();
+            $conexao = Conexao::conectar();
 
-        $stmt = $conexao->prepare($sql);
+            $stmt = $conexao->prepare($sql);
 
-        $stmt->bindParam(":modelo", $modelo);
-        $stmt->bindParam(":ano", $ano);
-        $stmt->bindParam(":renavam", $renavam);
-        $stmt->bindParam(":valor", $valorDiaria);
-        $stmt->bindParam(":marca", $idMarca);
-        $stmt->bindParam(":imagem", $imagemVeiculo);
-        $stmt->bindParam(":id", $id);
+            $stmt->bindParam(":modelo", $modelo);
+            $stmt->bindParam(":ano", $ano);
+            $stmt->bindParam(":renavam", $renavam);
+            $stmt->bindParam(":valor", $valorDiaria);
+            $stmt->bindParam(":marca", $idMarca);
+            $stmt->bindParam(":imagem", $imagemVeiculo);
+            $stmt->bindParam(":statusVeiculo", $statusVeiculo);
+            $stmt->bindParam(":id", $id);
 
-        return $stmt->execute();
+            return $stmt->execute();
 
-    } catch (PDOException $e) {
+        } catch (PDOException $e) {
 
-        die("Erro ao editar veículo: " . $e->getMessage());
+            die("Erro ao editar veículo: " . $e->getMessage());
+        }
     }
-}
 
-public function excluir($id)
-{
-    try {
+    public function excluir($id)
+    {
+        try {
 
-        $sql = "DELETE FROM veiculo WHERE idVeiculo = :id";
+            $sql = "DELETE FROM veiculo WHERE idVeiculo = :id";
 
-        $conexao = Conexao::conectar();
+            $conexao = Conexao::conectar();
 
-        $stmt = $conexao->prepare($sql);
+            $stmt = $conexao->prepare($sql);
 
-        $stmt->bindParam(":id", $id);
+            $stmt->bindParam(":id", $id);
 
-        return $stmt->execute();
+            return $stmt->execute();
 
-    } catch (PDOException $e) {
+        } catch (PDOException $e) {
 
-        error_log("Erro ao excluir veículo: " . $e->getMessage());
+            error_log("Erro ao excluir veículo: " . $e->getMessage());
 
-        return false;
+            return false;
+        }
     }
-}
 }

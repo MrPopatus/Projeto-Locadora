@@ -55,6 +55,10 @@ not null default 'cliente';
 
 alter table veiculo add column  imagemVeiculo varchar(255) not null;
 
+alter table veiculo
+add column statusVeiculo enum('ativo', 'reservado', 'inativo', 'cancelado')
+not null default 'ativo';
+
 insert into cliente
 (nomeCliente, telefone, email, senha, tipoUsuario)
 values
@@ -73,10 +77,10 @@ alter table locacao
 add column statusLocacao enum(
     'reservado',
     'ativo',
-    'finalizado',
+    'manutencao',
+    'inativo',
     'cancelado'
 ) not null default 'reservado';
-
 
 create table manutencao (
     idManutencao int auto_increment primary key ,
