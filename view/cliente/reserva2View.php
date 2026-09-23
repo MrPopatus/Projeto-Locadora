@@ -3,7 +3,7 @@
 session_start();
 
 if (!isset($_SESSION['reserva'])) {
-    header("Location: ../index.php");
+    header("Location: ../../index.php");
     exit;
 }
 
@@ -23,7 +23,7 @@ $valorPagar = $reserva['valorPagar'];
 
     <title>Confirmar Locação | DriveGo</title>
 
-    <link rel="stylesheet" href="../css/estilo.css">
+    <link rel="stylesheet" href="../../css/estilo.css">
 
 </head>
 
@@ -67,7 +67,7 @@ $valorPagar = $reserva['valorPagar'];
 
 
             <form
-                action="../controller/reserva2Controller.php"
+                action="../../controller/reserva2Controller.php"
                 method="POST"
             >
 
@@ -142,7 +142,7 @@ $valorPagar = $reserva['valorPagar'];
 
             <div class="form-secondary-action">
 
-                <a href="../index.php">
+                <a href="../../index.php">
                     Voltar ao início
                 </a>
 

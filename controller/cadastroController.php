@@ -6,8 +6,19 @@ if (isset($_POST['btnLogar'])) {
     $email = $_POST['email'];
     $senha = $_POST['senha'];
 
+    $senhaHash = password_hash($senha, PASSWORD_DEFAULT);
+
+    if ($senhaHash === false) {
+    echo "<script>
+            alert('Não foi possível proteger a senha.');
+            window.location.href = '../view/cadastroView.php';
+          </script>";
+    exit;
+}
+
+
     $clienteModel = new Cliente();
-    $sucesso = $clienteModel->inserir($nomeCliente, $telefone, $email, $senha);
+    $sucesso = $clienteModel->inserir($nomeCliente, $telefone, $email, $senhaHash);
 
     if ($sucesso) {
         echo "<script>

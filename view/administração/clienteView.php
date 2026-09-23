@@ -2,11 +2,11 @@
 session_start();
 
 if (!isset($_SESSION['usuario_id']) || ($_SESSION['usuario_tipo'] ?? '') !== 'funcionario') {
-    header('Location: ../view/loginView.php');
+    header('Location: ../loginView.php');
     exit;
 }
 
-require_once '../model/cadastroModel.php';
+require_once '../../model/cadastroModel.php';
 
 $clienteModel = new Cliente();
 $resumo = $clienteModel->buscarResumo();
@@ -19,13 +19,13 @@ $clientes = $clienteModel->listarClientes();
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Clientes - DriveGo</title>
-    <link rel="stylesheet" href="../css/estilo.css">
+    <link rel="stylesheet" href="../../css/estilo.css">
 </head>
 <body>
 <header class="site-header">
     <div class="container header-inner">
-        <a href="../index.php" class="brand-logo">Drive<span>Go</span></a>
-        <nav class="main-nav"><a href="../index.php" class="nav-link">Voltar</a></nav>
+        <a href="../../index.php" class="brand-logo">Drive<span>Go</span></a>
+        <nav class="main-nav"><a href="../../index.php" class="nav-link">Voltar</a></nav>
     </div>
 </header>
 

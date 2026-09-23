@@ -13,15 +13,18 @@ if (isset($_POST['btnLogar'])) {
 
     $usuario = $loginModel->buscarPorEmail($email);
 
-    if (!$usuario) {
-
+    if (
+        !$usuario ||
+        !password_verify($senha, $usuario['senha'])
+    ) {
         echo "<script>
                 alert('E-mail ou senha incorretos.');
                 window.location.href = '../view/loginView.php';
-              </script>";
-
+            </script>";
         exit;
     }
+
+    session_regenerate_id(true);
 
     $_SESSION['usuario_id'] = $usuario['idCliente'];
     $_SESSION['usuario_nome'] = $usuario['nomeCliente'];

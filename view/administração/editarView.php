@@ -3,11 +3,11 @@
 session_start();
 
 if (!isset($_SESSION['usuario_id']) || ($_SESSION['usuario_tipo'] ?? '') !== 'funcionario') {
-    header('Location: ../view/loginView.php');
+    header('Location: ../loginView.php');
     exit;
 }
 
-require_once '../model/carroModel.php';
+require_once '../../model/carroModel.php';
 
 $carroModel = new Carro();
 
@@ -39,7 +39,7 @@ if (!$carro) {
         Editar <?= htmlspecialchars($carro['modelo']); ?> - DriveGo
     </title>
 
-    <link rel="stylesheet" href="../css/estilo.css">
+    <link rel="stylesheet" href="../../css/estilo.css">
 
 </head>
 
@@ -49,7 +49,7 @@ if (!$carro) {
 
     <div class="container header-inner">
 
-        <a href="../index.php" class="brand-logo">
+        <a href="../../index.php" class="brand-logo">
             Drive<span>Go</span>
         </a>
 
@@ -59,7 +59,7 @@ if (!$carro) {
                 Veículos
             </a>
 
-            <a href="../index.php" class="nav-link">
+            <a href="../../index.php" class="nav-link">
                 Voltar
             </a>
 
@@ -92,7 +92,7 @@ if (!$carro) {
 
 
         <form
-            action="../controller/carroController.php"
+            action="../../controller/carroController.php"
             method="POST"
             enctype="multipart/form-data"
         >
@@ -240,7 +240,7 @@ if (!$carro) {
                 </label>
 
                 <img
-                    src="../<?= htmlspecialchars($carro['imagemVeiculo']); ?>"
+                    src="../../<?= htmlspecialchars($carro['imagemVeiculo']); ?>"
                     alt="<?= htmlspecialchars($carro['modelo']); ?>"
                     class="vehicle-preview"
                 >
@@ -273,7 +273,7 @@ if (!$carro) {
 
             <div class="form-secondary-action">
 
-                <a href="../index.php">
+                <a href="../../index.php">
                     Cancelar
                 </a>
 

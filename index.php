@@ -51,24 +51,32 @@
 
                             <nav id="admin-menu" class="admin-menu" aria-label="Menu administrativo">
                                 <span class="admin-menu__title">Administração</span>
-                                <span class="admin-menu__item admin-menu__item--disabled" aria-disabled="true">
-                                    Dashboard <small>em breve</small>
-                                </span>
-                                <a href="view/carroView.php" class="admin-menu__item">
+                                <a href="view/administração/dashboardView.php" class="admin-menu__item">
+                                    Dashboard
+                                </a>
+                                <a href="view/administração/carroView.php" class="admin-menu__item">
                                     Cadastrar veículo
                                 </a>
-                                <a href="view/marcaView.php" class="admin-menu__item">
+                                <a href="view/administração/marcaView.php" class="admin-menu__item">
                                     Cadastrar marca
                                 </a>
-                                <a href="view/clienteView.php" class="admin-menu__item">
+                                <a href="view/administração/clienteView.php" class="admin-menu__item">
                                     Clientes
                                 </a>
-                                <a href="view/manutencaoView.php" class="admin-menu__item">
+                                <a href="view/administração/manutencaoView.php" class="admin-menu__item">
                                     Manutenções
+                                </a>
+                                <a href="view/administração/atendimentoView.php" class="admin-menu__item">
+                                    Atendimento
                                 </a>
                             </nav>
                         </div>
 
+                    <?php endif; ?>
+                    <?php if ($tipoUsuario === 'cliente'): ?>
+                        <a href="view/cliente/atendimentoView.php" class="btn btn-primary">
+                            Atendimento
+                        </a>
                     <?php endif; ?>
                     <span class="nav-user">
                         Olá,
@@ -151,7 +159,7 @@
                             <?php if ($usuarioLogado && $tipoUsuario === 'funcionario'): ?>
 
                                 <a 
-                                    href="view/editarView.php?id=<?= $carro['idVeiculo']; ?>"
+                                    href="view/administração/editarView.php?id=<?= $carro['idVeiculo']; ?>"
                                     class="btn btn-primary"
                                 >
                                     Editar
@@ -160,7 +168,7 @@
                             <?php else: ?>
 
                                 <a 
-                                    href="view/detalhesView.php?id=<?= $carro['idVeiculo']; ?>"
+                                    href="view/cliente/detalhesView.php?id=<?= $carro['idVeiculo']; ?>"
                                     class="btn btn-accent"
                                 >
                                     Detalhes

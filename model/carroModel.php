@@ -166,4 +166,74 @@ class Carro
             return false;
         }
     }
+
+    public function contarCarros()
+    {
+        try {
+            $sql = "SELECT COUNT(*) AS total
+                    FROM veiculo";
+
+            $conexao = Conexao::conectar();
+
+            $stmt = $conexao->prepare($sql);
+            $stmt->execute();
+
+            return $stmt->fetch(PDO::FETCH_ASSOC);
+
+        } catch (PDOException $e) {
+            return ['total' => 0];
+        }
+    }
+    public function contarCarrosAtivos()
+    {
+        try {
+            $sql = "SELECT COUNT(*) AS total
+                    FROM veiculo
+                    WHERE statusVeiculo = 'ativo'";
+
+            $conexao = Conexao::conectar();
+
+            $stmt = $conexao->prepare($sql);
+            $stmt->execute();
+
+            return $stmt->fetch(PDO::FETCH_ASSOC);
+
+        } catch (PDOException $e) {
+            return ['total' => 0];
+        }
+    }
+    public function contarCarrosAlugados()
+    {
+        try {
+            $sql = "SELECT COUNT(*) AS total
+                    FROM veiculo
+                    WHERE statusVeiculo = 'reservado'";
+
+            $conexao = Conexao::conectar();
+
+            $stmt = $conexao->prepare($sql);
+            $stmt->execute();
+
+            return $stmt->fetch(PDO::FETCH_ASSOC);
+
+        } catch (PDOException $e) {
+            return ['total' => 0];
+        }
+    }
+    public function contarReceita()
+    {
+        try {
+            $sql = "SELECT COALESCE(SUM(valorPagar), 0) AS total
+                    FROM locacao";
+            $conexao = Conexao::conectar();
+
+            $stmt = $conexao->prepare($sql);
+            $stmt->execute();
+
+            return $stmt->fetch(PDO::FETCH_ASSOC);
+
+        } catch (PDOException $e) {
+            return ['total' => 0];
+        }
+    }
 }

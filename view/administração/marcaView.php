@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cadastrar Marca</title>
-    <link rel="stylesheet" href="../css/estilo.css">
+    <link rel="stylesheet" href="../../css/estilo.css">
 </head>
 <body>
      <main class="form-page">
@@ -17,7 +17,7 @@
                 <p>Adicione uma marca para disponibilizá-la no cadastro de veículos.</p>
             </header>
 
-            <form action="../controller/marcaController.php" method="POST">
+            <form action="../../controller/marcaController.php" method="POST">
 
                 <div class="field">
                     <label for="marca">Nome da marca</label>
@@ -43,7 +43,7 @@
             </form>
 
             <div class="form-secondary-action">
-                <a href="../index.php"> 
+                <a href="../../index.php"> 
                     Voltar ao Início
                 </a>
             </div>

@@ -1,6 +1,6 @@
 <?php
 if (!isset($marcas)) {
-    require_once '../model/marcaModel.php';
+    require_once '../../model/marcaModel.php';
     $marcaModel = new Marca();
     $marcas = $marcaModel->listarMarcas();
 }
@@ -12,7 +12,7 @@ if (!isset($marcas)) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cadastrar Veículo</title>
-    <link rel="stylesheet" href="../css/estilo.css">
+    <link rel="stylesheet" href="../../css/estilo.css">
 </head>
 
 <body>
@@ -26,7 +26,7 @@ if (!isset($marcas)) {
                 <p>Inclua um novo modelo para exibi-lo na frota disponível.</p>
             </header>
 
-            <form action="../controller/carroController.php" method="POST" enctype="multipart/form-data">
+            <form action="../../controller/carroController.php" method="POST" enctype="multipart/form-data">
 
                 <div class="field">
                     <label for="marca">Marca:</label>
@@ -112,7 +112,7 @@ if (!isset($marcas)) {
             </form>
 
             <div class="form-secondary-action">
-                <a href="../index.php">
+                <a href="../../index.php">
                     ← Voltar ao Início
                 </a>
             </div>

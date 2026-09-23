@@ -19,14 +19,14 @@ if (isset($_POST['btnAgendar'])) {
     if ($sucesso) {
         echo "<script>
                     alert('Agendamento realizado com sucesso!');
-                    window.location.href = '../view/manutencaoView.php';
+                    window.location.href = '../view/administração/manutencaoView.php';
                 </script>";
 
 
     } else {
         echo "<script>
                     alert('Erro ao realizar o agendamento. Tente novamente.');
-                    window.location.href = '../view/manutencaoView.php';
+                    window.location.href = '../view/administração/manutencaoView.php';
                 </script>";
     }
 }
@@ -37,7 +37,7 @@ if (isset($_POST['btnAtualizarStatus'])) {
     $statusPermitidos = ['agendada', 'em_andamento', 'finalizada'];
 
     if (!$idManutencao || !in_array($status, $statusPermitidos, true)) {
-        echo "<script>alert('Dados de status inválidos.'); window.location.href = '../view/manutencaoView.php';</script>";
+        echo "<script>alert('Dados de status inválidos.'); window.location.href = '../view/administração/manutencaoView.php';</script>";
         exit;
     }
 
@@ -45,5 +45,5 @@ if (isset($_POST['btnAtualizarStatus'])) {
     $sucesso = $manutencaoModel->editarStatus($idManutencao, $status);
     $mensagem = $sucesso ? 'Status atualizado com sucesso!' : 'Erro ao atualizar o status. Tente novamente.';
 
-    echo "<script>alert('{$mensagem}'); window.location.href = '../view/manutencaoView.php';</script>";
+    echo "<script>alert('{$mensagem}'); window.location.href = '../view/administração/manutencaoView.php';</script>";
 }

@@ -1,6 +1,6 @@
 <?php
 
-require_once '../controller/conexao.php';
+require_once __DIR__ . '/../controller/conexao.php';
 
 class Reserva
 {
@@ -88,4 +88,15 @@ class Reserva
         return false;
     }
 }
+
+    public function atualizarStatusVeiculo($idVeiculo, $status)
+    {
+        try {
+            $stmt = Conexao::conectar()->prepare('UPDATE veiculo SET statusVeiculo = :status WHERE idVeiculo = :id');
+            return $stmt->execute([':status' => $status, ':id' => $idVeiculo]);
+        } catch (PDOException $e) {
+            error_log('Erro ao atualizar status do veículo: ' . $e->getMessage());
+            return false;
+        }
+    }
 }

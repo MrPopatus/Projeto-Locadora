@@ -9,13 +9,13 @@ if (isset($_POST['btnCadastrar'])) {
     if ($sucesso) {
         echo "<script>
                     alert('Cadastro realizado com sucesso!');
-                    window.location.href = '../view/marcaView.php';
+                    window.location.href = '../view/administração/marcaView.php';
                 </script>";
 
     } else {
         echo "<script>
                     alert('Erro ao realizar o cadastro. Tente novamente.');
-                    window.location.href = '../view/marcaView.php';
+                    window.location.href = '../view/administração/marcaView.php';
                 </script>";
     }
 }

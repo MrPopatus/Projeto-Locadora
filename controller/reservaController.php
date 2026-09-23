@@ -72,7 +72,7 @@ if (isset($_POST['btnContinuarReserva'])) {
     'valorPagar' => $valorPagar
     ];
 
-    header("Location: ../view/reserva2View.php");
+    header("Location: ../view/cliente/reserva2View.php");
         exit;
     }
 

@@ -3,7 +3,7 @@
 $carroId = $_GET['carro_id'] ?? null;
 
 if (!$carroId) {
-    header("Location: ../index.php");
+    header("Location: ../../index.php");
     exit;
 }
 
@@ -17,7 +17,7 @@ if (!$carroId) {
 
     <title>Fazer Reserva | DriveGo</title>
 
-    <link rel="stylesheet" href="../css/estilo.css">
+    <link rel="stylesheet" href="../../css/estilo.css">
 </head>
 
 <body>
@@ -30,7 +30,7 @@ if (!$carroId) {
                 <span class="eyebrow">Alugue Agora</span>
                 <h1>Preencha o Formulário de Locação</h1>
             </header>
-            <form action="../controller/reservaController.php" method="POST">
+            <form action="../../controller/reservaController.php" method="POST">
 
                 <input
                     type="hidden"
@@ -65,7 +65,7 @@ if (!$carroId) {
             </form>
 
             <div class="form-secondary-action">
-                <a href="../index.php">
+                <a href="../../index.php">
                      Voltar ao início
                 </a>
             </div>

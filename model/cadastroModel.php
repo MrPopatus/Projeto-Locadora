@@ -1,10 +1,10 @@
 <?php
-require_once '../controller/conexao.php';
+require_once __DIR__ . '/../controller/conexao.php';
 
 class Cliente
 {
 
-    public function inserir($nomeCliente, $telefone, $email, $senha)
+    public function inserir($nomeCliente, $telefone, $email, $senhaHash)
     {
         try {
             $sql = "INSERT INTO cliente (nomeCliente, telefone, email, senha, tipoUsuario) VALUES (:nomeCliente, :telefone, :email, :senha, 'cliente')";
@@ -15,7 +15,7 @@ class Cliente
             $stmt->bindParam(":nomeCliente", $nomeCliente);
             $stmt->bindParam(":telefone", $telefone);
             $stmt->bindParam(":email", $email);
-            $stmt->bindParam(":senha", $senha);
+            $stmt->bindParam(":senha", $senhaHash);
 
             return $stmt->execute();
         } catch (PDOException $e) {

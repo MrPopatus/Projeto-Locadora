@@ -1,6 +1,6 @@
 <?php
 
-require_once '../controller/conexao.php';
+require_once __DIR__ . '/../controller/conexao.php';
 
 class Login {
 

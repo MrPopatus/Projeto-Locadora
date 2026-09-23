@@ -64,7 +64,7 @@ if (
 
     $marcas = $marcaModel->listarMarcas();
 
-    require_once '../view/carroView.php';
+    require_once '../view/administração/carroView.php';
 
     exit();
 }
@@ -172,14 +172,14 @@ if (isset($_POST['btnEditar'])) {
 
         echo "<script>
                 alert('Veículo atualizado com sucesso!');
-                window.location.href = '../view/editarView.php?id=" . urlencode($id) . "';
+                window.location.href = '../view/administração/editarView.php?id=" . urlencode($id) . "';
               </script>";
 
     } else {
 
         echo "<script>
                 alert('Erro ao atualizar o veículo.');
-                window.location.href = '../view/editarView.php?id=" . urlencode($id) . "';
+                window.location.href = '../view/administração/editarView.php?id=" . urlencode($id) . "';
               </script>";
     }
 }

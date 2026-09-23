@@ -1,8 +1,8 @@
 <?php
   session_start();
 
-  require_once '../model/carroModel.php';
-  require_once '../model/manutencaoModel.php';
+  require_once '../../model/carroModel.php';
+  require_once '../../model/manutencaoModel.php';
 
   $carroModel = new Carro();
 
@@ -27,7 +27,7 @@
 
     <title>Registrar Manutenção - DriveGo</title>
 
-    <link rel="stylesheet" href="../css/estilo.css">
+    <link rel="stylesheet" href="../../css/estilo.css">
 
 </head>
 
@@ -37,13 +37,13 @@
 
     <div class="container header-inner">
 
-        <a href="../index.php" class="brand-logo">
+        <a href="../../index.php" class="brand-logo">
             Drive<span>Go</span>
         </a>
 
         <nav class="main-nav">
 
-            <a href="../index.php" class="nav-link">
+            <a href="../../index.php" class="nav-link">
                 Voltar
             </a>
 
@@ -77,7 +77,7 @@
                 <button type="button" class="maintenance-close" id="fechar-agendamento" aria-label="Fechar formulário">×</button>
             </div>
 
-            <form action="../controller/manutencaoController.php" method="POST">
+            <form action="../../controller/manutencaoController.php" method="POST">
                 <div class="maintenance-form-grid">
                     <div class="field">
                     <label for="veiculo">Veículo:</label>
@@ -250,7 +250,7 @@
                                     <?= htmlspecialchars($manutencao['nomeMarca'] . ' ' . $manutencao['modelo']); ?>
                                 </p>
 
-                                <form action="../controller/manutencaoController.php" method="POST">
+                                <form action="../../controller/manutencaoController.php" method="POST">
                                     <input type="hidden" name="idManutencao" value="<?= (int) $manutencao['idManutencao']; ?>">
                                     <div class="field">
                                         <label for="status-<?= (int) $manutencao['idManutencao']; ?>">Status do agendamento</label>

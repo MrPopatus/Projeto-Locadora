@@ -1,14 +1,14 @@
 <?php
 
-require_once '../model/carroModel.php';
-require_once '../model/reserva2Model.php';
+require_once __DIR__ . '/../../model/carroModel.php';
+require_once __DIR__ . '/../../model/reserva2Model.php';
 
 $carroModel = new Carro();
 
 $id = $_GET['id'] ?? null;
 
 if (!$id) {
-    header("Location: ../index.php");
+    header("Location: ../../index.php");
     exit;
 }
 
@@ -52,7 +52,7 @@ if ($statusVeiculo === 'ativo' && !$disponivel) {
         - DriveGo
     </title>
 
-    <link rel="stylesheet" href="../css/estilo.css">
+    <link rel="stylesheet" href="../../css/estilo.css">
 
 </head>
 
@@ -62,13 +62,13 @@ if ($statusVeiculo === 'ativo' && !$disponivel) {
 
     <div class="container header-inner">
 
-        <a href="../index.php" class="brand-logo">
+        <a href="../../index.php" class="brand-logo">
             Drive<span>Go</span>
         </a>
 
         <nav class="main-nav">
 
-            <a href="../index.php" class="nav-link">
+            <a href="../../index.php" class="nav-link">
                 Voltar
             </a>
 
